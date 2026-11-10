@@ -25,7 +25,7 @@ class CalificacionModel
     private CalificacionNota $nota;
     private DateTime $fecha;
 
-public function __construct(
+    public function __construct(
         CalilficacionId $id,
         CalificacionEstudiante $estudiante,
         CalificacionDocente $docente,
@@ -70,5 +70,55 @@ public function __construct(
             $actividadEvaluada,
             $nota
         );
+    }
+
+    public function id(): CalilficacionId
+    {
+        return $this->id;
+    }
+
+    public function estudiante(): CalificacionEstudiante
+    {
+        return $this->estudiante;
+    }
+
+    public function docente(): CalificacionDocente
+    {
+        return $this->docente;
+    }
+
+    public function asignatura(): CalificacionAsignatura
+    {
+        return $this->asignatura;
+    }
+
+    public function carrera(): CalificacionCarrera
+    {
+        return $this->carrera;
+    }
+
+    public function universidad(): CalificacionUniversidad
+    {
+        return $this->universidad;
+    }
+
+    public function periodo(): CalificacionPeriodo
+    {
+        return $this->periodo;
+    }
+
+    public function actividadEvaluada(): CalificacionActividadEvaluada
+    {
+        return $this->actividadEvaluada;
+    }
+
+    public function nota(): CalificacionNota
+    {
+        return $this->nota;
+    }
+
+    public function fecha(): DateTime
+    {
+        return $this->fecha;
     }
 }
