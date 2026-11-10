@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionId.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionEstudiante.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionDocente.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionAsignatura.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionCarrera.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionUniversidad.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionPeriodo.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionActividadEvaluada.php';
-require_once __DIR__ . '/../Domain/ValueObjects/CalificacionNota.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionId.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionEstudiante.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionDocente.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionAsignatura.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionCarrera.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionUniversidad.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionPeriodo.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionActividadEvaluada.php';
+require_once __DIR__ . '/../ValueObjects/CalificacionNota.php';
 
 class CalificacionModel
 {
