@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../Exceptions/InvalidCalificacionIdException.php';
 
-class CalilficacionId
+class CalificacionId
 {
     private int $id;
 

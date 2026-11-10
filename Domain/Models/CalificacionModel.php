@@ -14,7 +14,7 @@ require_once __DIR__ . '/../Domain/ValueObjects/CalificacionNota.php';
 
 class CalificacionModel
 {
-    private CalilficacionId $id;
+    private CalificacionId $id;
     private CalificacionEstudiante $estudiante;
     private CalificacionDocente $docente;
     private CalificacionAsignatura $asignatura;
@@ -26,7 +26,7 @@ class CalificacionModel
     private DateTime $fecha;
 
     public function __construct(
-        CalilficacionId $id,
+        CalificacionId $id,
         CalificacionEstudiante $estudiante,
         CalificacionDocente $docente,
         CalificacionAsignatura $asignatura,
@@ -49,7 +49,7 @@ class CalificacionModel
     }
 
     public function create(
-        CalilficacionId $id,
+        CalificacionId $id,
         CalificacionEstudiante $estudiante,
         CalificacionDocente $docente,
         CalificacionAsignatura $asignatura,
@@ -72,7 +72,7 @@ class CalificacionModel
         );
     }
 
-    public function id(): CalilficacionId
+    public function id(): CalificacionId
     {
         return $this->id;
     }
