@@ -6,5 +6,5 @@ require_once __DIR__ . '/../../../Domain/Models/CalificacionModel.php';
 
 interface SaveCalificacionPort
 {
-    public function execute(CalificacionModel $model): CalificacionModel;
+    public function save(CalificacionModel $model): CalificacionModel;
 }
