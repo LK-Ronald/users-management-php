@@ -51,7 +51,7 @@ final class CalificacionApplicationMapper
         );
     }
 
-    public static function fromGetCalificacionByIdQueryToUserId(GetCalificacionByIdQuery $query): CalificacionId
+    public static function fromGetCalificacionByIdQueryToCalificacionId(GetCalificacionByIdQuery $query): CalificacionId
     {
         return new CalificacionId($query->id());
     }
