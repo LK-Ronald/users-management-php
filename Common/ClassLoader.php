@@ -68,6 +68,36 @@ final class ClassLoader
         'UserPersistenceMapper' => 'Infrastructure/Adapters/Persistence/MySQL/Mapper/UserPersistenceMapper.php',
         'UserRepositoryMySQL' => 'Infrastructure/Adapters/Persistence/MySQL/Repository/UserRepositoryMySQL.php',
 
+        'CalificacionPersistenceDto' => 'Infrastructure/Adapters/Persistence/MySQL/Dto/CalificacionPersistenceDto.php',
+        'CalificacionEntity' => 'Infrastructure/Adapters/Persistence/MySQL/Entity/CalificacionEntity.php',
+        'CalificacionPersistenceMapper' => 'Infrastructure/Adapters/Persistence/MySQL/Mapper/CalificacionPersistenceMapper.php',
+        'CalificacionRepositoryMySQL' => 'Infrastructure/Adapters/Persistence/MySQL/Repository/CalificacionRepositoryMySQL.php',
+
+        'CreateCalificacionUseCase' => 'Application/Ports/In/CreateCalificacionUseCase.php',
+        'UpdateCalificacionUseCase' => 'Application/Ports/In/UpdateCalificacionUseCase.php',
+        'GetCalificacionByIdUseCase' => 'Application/Ports/In/GetCalificacionByIdUseCase.php',
+        'GetAllCalificacionesUseCase' => 'Application/Ports/In/GetAllCalificacionesUseCase.php',
+        'DeleteCalificacionUseCase' => 'Application/Ports/In/DeleteCalificacionUseCase.php',
+
+        'SaveCalificacionPort' => 'Application/Ports/Out/SaveCalificacionPort.php',
+        'UpdateCalificacionPort' => 'Application/Ports/Out/UpdateCalificacionPort.php',
+        'GetCalificacionByIdPort' => 'Application/Ports/Out/GetCalificacionByIdPort.php',
+        'GetAllCalificacionPort' => 'Application/Ports/Out/GetAllCalificacionPort.php',
+        'DeleteCalificacionPort' => 'Application/Ports/Out/DeleteCalificacionPort.php',
+
+        'CreateCalificacionCommand' => 'Application/Services/Dto/Commands/CreateCalificacionCommand.php',
+        'UpdateCalificacionCommand' => 'Application/Services/Dto/Commands/UpdateCalificacionCommand.php',
+        'DeleteCalificacionCommand' => 'Application/Services/Dto/Commands/DeleteCalificacionCommand.php',
+        'GetCalificacionByIdQuery' => 'Application/Services/Dto/Queries/GetCalificacionByIdQuery.php',
+        'GetAllCalificacionesQuery' => 'Application/Services/Dto/Queries/GetAllCalificacionesQuery.php',
+
+        'CreateCalificacionService' => 'Application/Services/CreateCalificacionService.php',
+        'UpdateCalificacionService' => 'Application/Services/UpdateCalificacionService.php',
+        'GetCalificacionByIdService' => 'Application/Services/GetCalificacionByIdService.php',
+        'GetAllCalificacionesService' => 'Application/Services/GetAllCalificacionesService.php',
+        'DeleteCalificacionService' => 'Application/Services/DeleteCalificacionService.php',
+        'CalificacionApplicationMapper' => 'Application/Services/Mappers/CalificacionApplicationMapper.php',
+
         'CreateUserWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/CreateUserRequest.php',
         'UpdateUserWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/UpdateUserRequest.php',
         'LoginWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/LoginWebRequest.php',

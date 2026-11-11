@@ -148,6 +148,72 @@ final class DependencyInjection
         );
     }
 
+    public static function getCalificacionPersistenceMapper(): CalificacionPersistenceMapper
+    {
+        ClassLoader::loadClass('CalificacionPersistenceMapper');
+
+        return new CalificacionPersistenceMapper();
+    }
+
+    public static function getCalificacionRepository(): CalificacionRepositoryMySQL
+    {
+        ClassLoader::loadClass('CalificacionRepositoryMySQL');
+
+        return new CalificacionRepositoryMySQL(
+            self::getPdo(),
+            self::getCalificacionPersistenceMapper()
+        );
+    }
+
+    public static function getCreateCalificacionUseCase(): CreateCalificacionUseCase
+    {
+        ClassLoader::loadClass('CreateCalificacionService');
+
+        return new CreateCalificacionService(
+            self::getCalificacionRepository()
+        );
+    }
+
+    public static function getUpdateCalificacionUseCase(): UpdateCalificacionUseCase
+    {
+        ClassLoader::loadClass('UpdateCalificacionService');
+        $repository = self::getCalificacionRepository();
+
+        return new UpdateCalificacionService(
+            $repository,
+            $repository
+        );
+    }
+
+    public static function getGetCalificacionByIdUseCase(): GetCalificacionByIdUseCase
+    {
+        ClassLoader::loadClass('GetCalificacionByIdService');
+
+        return new GetCalificacionByIdService(
+            self::getCalificacionRepository()
+        );
+    }
+
+    public static function getGetAllCalificacionesUseCase(): GetAllCalificacionesUseCase
+    {
+        ClassLoader::loadClass('GetAllCalificacionesService');
+
+        return new GetAllCalificacionesService(
+            self::getCalificacionRepository()
+        );
+    }
+
+    public static function getDeleteCalificacionUseCase(): DeleteCalificacionUseCase
+    {
+        ClassLoader::loadClass('DeleteCalificacionService');
+        $repository = self::getCalificacionRepository();
+
+        return new DeleteCalificacionService(
+            $repository,
+            $repository
+        );
+    }
+
     public static function getLoginUseCase(): LoginUseCase
     {
         ClassLoader::loadClass('LoginService');
