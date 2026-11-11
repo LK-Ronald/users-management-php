@@ -61,7 +61,7 @@ final class CalificacionPersistenceMapper
             (string) $row['carrera'],
             (string) $row['universidad'],
             (string) $row['periodo'],
-            (string) $row['actividadEvaluada'],
+            (string) $row['actividad_evaluada'],
             (float) $row['nota']
         );
     }
