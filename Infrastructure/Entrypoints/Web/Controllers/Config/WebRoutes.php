@@ -42,6 +42,34 @@ final class WebRoutes
                 'method' => 'POST',
                 'action' => 'delete',
             ),
+            'calificaciones.create' => array(
+                'method' => 'GET',
+                'action' => 'calificaciones.create',
+            ),
+            'calificaciones.store' => array(
+                'method' => 'POST',
+                'action' => 'calificaciones.store',
+            ),
+            'calificaciones.index' => array(
+                'method' => 'GET',
+                'action' => 'calificaciones.index',
+            ),
+            'calificaciones.show' => array(
+                'method' => 'GET',
+                'action' => 'calificaciones.show',
+            ),
+            'calificaciones.edit' => array(
+                'method' => 'GET',
+                'action' => 'calificaciones.edit',
+            ),
+            'calificaciones.update' => array(
+                'method' => 'POST',
+                'action' => 'calificaciones.update',
+            ),
+            'calificaciones.delete' => array(
+                'method' => 'POST',
+                'action' => 'calificaciones.delete',
+            ),
             'auth.login' => array(
                 'method' => 'GET',
                 'action' => 'login',

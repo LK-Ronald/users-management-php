@@ -148,6 +148,27 @@ final class DependencyInjection
         );
     }
 
+    public static function getCalificacionWebMapper(): CalificacionWebMapper
+    {
+        ClassLoader::loadClass('CalificacionWebMapper');
+
+        return new CalificacionWebMapper();
+    }
+
+    public static function getCalificacionController(): CalificacionController
+    {
+        ClassLoader::loadClass('CalificacionController');
+
+        return new CalificacionController(
+            self::getCreateCalificacionUseCase(),
+            self::getUpdateCalificacionUseCase(),
+            self::getGetCalificacionByIdUseCase(),
+            self::getGetAllCalificacionesUseCase(),
+            self::getDeleteCalificacionUseCase(),
+            self::getCalificacionWebMapper()
+        );
+    }
+
     public static function getCalificacionPersistenceMapper(): CalificacionPersistenceMapper
     {
         ClassLoader::loadClass('CalificacionPersistenceMapper');

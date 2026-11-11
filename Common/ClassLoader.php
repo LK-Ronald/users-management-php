@@ -102,8 +102,13 @@ final class ClassLoader
         'UpdateUserWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/UpdateUserRequest.php',
         'LoginWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/LoginWebRequest.php',
         'UserResponse' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/UserResponse.php',
+        'CreateCalificacionWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/CreateCalificacionRequest.php',
+        'UpdateCalificacionWebRequest' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/UpdateCalificacionRequest.php',
+        'CalificacionResponse' => 'Infrastructure/Entrypoints/Web/Controllers/Dto/CalificacionResponse.php',
         'UserWebMapper' => 'Infrastructure/Entrypoints/Web/Controllers/Mapper/UserWebMapper.php',
+        'CalificacionWebMapper' => 'Infrastructure/Entrypoints/Web/Controllers/Mapper/CalificacionWebMapper.php',
         'UserController' => 'Infrastructure/Entrypoints/Web/Controllers/UserController.php',
+        'CalificacionController' => 'Infrastructure/Entrypoints/Web/Controllers/CalificacionController.php',
         'WebRoutes' => 'Infrastructure/Entrypoints/Web/Controllers/Config/WebRoutes.php',
 
         'View' => 'Infrastructure/Entrypoints/Web/Presentation/View.php',
