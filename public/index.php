@@ -78,7 +78,23 @@ if ($httpMethod !== $definition['method']) {
 }
 
 // Protect all user management routes behind authentication.
-$publicActions = array('home', 'login', 'authenticate', 'logout', 'forgot', 'forgot.send', 'create', 'store');
+$publicActions = array(
+    'home',
+    'login',
+    'authenticate',
+    'logout',
+    'forgot',
+    'forgot.send',
+    'create',
+    'store',
+    'calificaciones.create',
+    'calificaciones.store',
+    'calificaciones.index',
+    'calificaciones.show',
+    'calificaciones.edit',
+    'calificaciones.update',
+    'calificaciones.delete',
+);
 if (!in_array($definition['action'], $publicActions, true) && !isLoggedIn()) {
     Flash::setMessage('Debes iniciar sesión para acceder a esta sección.');
     View::redirect('auth.login');
@@ -180,6 +196,103 @@ try {
             $controller->delete($id);
             Flash::setSuccess('Usuario eliminado correctamente.');
             View::redirect('users.index');
+            break;
+
+        case 'calificaciones.create':
+            View::render('calificaciones/create', buildCreateCalificacionViewData());
+            break;
+
+        case 'calificaciones.store':
+            $controller = DependencyInjection::getCalificacionController();
+            $form = getCreateCalificacionFormData();
+            $errors = validateCreateCalificacionForm($form);
+
+            if (!empty($errors)) {
+                Flash::setOld($form);
+                Flash::setErrors($errors);
+                Flash::setMessage('Corrige los errores del formulario.');
+                View::redirect('calificaciones.create');
+            }
+
+            $request = new CreateCalificacionWebRequest(
+                0,
+                $form['estudiante'],
+                $form['docente'],
+                $form['asignatura'],
+                $form['carrera'],
+                $form['universidad'],
+                $form['periodo'],
+                $form['actividad'],
+                (float) $form['nota']
+            );
+
+            $controller->store($request);
+
+            Flash::setSuccess('Calificación registrada correctamente.');
+            View::redirect('calificaciones.index');
+            break;
+
+        case 'calificaciones.index':
+            $controller = DependencyInjection::getCalificacionController();
+            $calificaciones = $controller->index();
+            View::render('calificaciones/list', buildListCalificacionesViewData($calificaciones));
+            break;
+
+        case 'calificaciones.show':
+            $controller = DependencyInjection::getCalificacionController();
+            $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+            $calificacion = $controller->show($id);
+            View::render('calificaciones/show', array(
+                'pageTitle' => 'Detalle de calificación',
+                'calificacion' => $calificacion,
+                'message' => Flash::message(),
+            ));
+            break;
+
+        case 'calificaciones.edit':
+            $controller = DependencyInjection::getCalificacionController();
+            $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+            $calificacion = $controller->show($id);
+            View::render('calificaciones/edit', buildEditCalificacionViewData($calificacion));
+            break;
+
+        case 'calificaciones.update':
+            $controller = DependencyInjection::getCalificacionController();
+            $form = getUpdateCalificacionFormData();
+            $errors = validateUpdateCalificacionForm($form);
+
+            if (!empty($errors)) {
+                Flash::setOld($form);
+                Flash::setErrors($errors);
+                Flash::setMessage('Corrige los errores del formulario.');
+                header('Location: ?route=calificaciones.edit&id=' . urlencode((string) $form['id']));
+                exit;
+            }
+
+            $request = new UpdateCalificacionWebRequest(
+                (int) $form['id'],
+                $form['estudiante'],
+                $form['docente'],
+                $form['asignatura'],
+                $form['carrera'],
+                $form['universidad'],
+                $form['periodo'],
+                $form['actividad'],
+                (float) $form['nota']
+            );
+
+            $controller->update($request);
+
+            Flash::setSuccess('Calificación actualizada correctamente.');
+            View::redirect('calificaciones.index');
+            break;
+
+        case 'calificaciones.delete':
+            $controller = DependencyInjection::getCalificacionController();
+            $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+            $controller->delete($id);
+            Flash::setSuccess('Calificación eliminada correctamente.');
+            View::redirect('calificaciones.index');
             break;
 
         case 'login':
@@ -316,6 +429,27 @@ try {
             View::redirect('users.index');
             break;
 
+        case 'calificaciones.store':
+            Flash::setOld(getCreateCalificacionFormData());
+            View::redirect('calificaciones.create');
+            break;
+
+        case 'calificaciones.update':
+            $updateId = isset($_POST['id']) ? trim((string) $_POST['id']) : '';
+            Flash::setOld(getUpdateCalificacionFormData());
+            header('Location: ?route=calificaciones.edit&id=' . urlencode($updateId));
+            exit;
+
+        case 'calificaciones.show':
+        case 'calificaciones.edit':
+            View::redirect('calificaciones.index');
+            break;
+
+        case 'calificaciones.delete':
+            Flash::setMessage($msg);
+            View::redirect('calificaciones.index');
+            break;
+
         default:
             View::render('home', buildHomeViewData($msg));
             break;
@@ -354,6 +488,20 @@ function buildListUsersViewData(array $users): array
     return array(
         'pageTitle' => 'Lista de usuarios',
         'users' => $users,
+        'message' => Flash::message(),
+        'success' => Flash::success(),
+    );
+}
+
+/**
+ * @param CalificacionResponse[] $calificaciones
+ * @return array<string, mixed>
+ */
+function buildListCalificacionesViewData(array $calificaciones): array
+{
+    return array(
+        'pageTitle' => 'Lista de calificaciones',
+        'calificaciones' => $calificaciones,
         'message' => Flash::message(),
         'success' => Flash::success(),
     );
@@ -402,6 +550,34 @@ function buildEditUserViewData(UserResponse $user): array
     );
 }
 
+/**
+ * @return array<string, mixed>
+ */
+function buildCreateCalificacionViewData(): array
+{
+    return array(
+        'pageTitle' => 'Registrar calificación',
+        'message' => Flash::message(),
+        'success' => Flash::success(),
+        'errors' => Flash::errors(),
+        'old' => Flash::old(),
+    );
+}
+
+/**
+ * @return array<string, mixed>
+ */
+function buildEditCalificacionViewData(CalificacionResponse $calificacion): array
+{
+    return array(
+        'pageTitle' => 'Editar calificación',
+        'calificacion' => $calificacion,
+        'message' => Flash::message(),
+        'errors' => Flash::errors(),
+        'old' => Flash::old(),
+    );
+}
+
 
 function generateUuid4(): string
 {
@@ -441,6 +617,40 @@ function getUpdateUserFormData(): array
     );
 }
 
+/**
+ * @return array<string, string>
+ */
+function getCreateCalificacionFormData(): array
+{
+    return array(
+        'estudiante' => isset($_POST['estudiante']) ? trim((string) $_POST['estudiante']) : '',
+        'docente' => isset($_POST['docente']) ? trim((string) $_POST['docente']) : '',
+        'asignatura' => isset($_POST['asignatura']) ? trim((string) $_POST['asignatura']) : '',
+        'carrera' => isset($_POST['carrera']) ? trim((string) $_POST['carrera']) : '',
+        'universidad' => isset($_POST['universidad']) ? trim((string) $_POST['universidad']) : '',
+        'periodo' => isset($_POST['periodo']) ? trim((string) $_POST['periodo']) : '',
+        'actividad' => isset($_POST['actividad']) ? trim((string) $_POST['actividad']) : '',
+        'nota' => isset($_POST['nota']) ? trim((string) $_POST['nota']) : '',
+    );
+}
+
+/**
+ * @return array<string, string>
+ */
+function getUpdateCalificacionFormData(): array
+{
+    return array(
+        'id' => isset($_POST['id']) ? trim((string) $_POST['id']) : '',
+        'estudiante' => isset($_POST['estudiante']) ? trim((string) $_POST['estudiante']) : '',
+        'docente' => isset($_POST['docente']) ? trim((string) $_POST['docente']) : '',
+        'asignatura' => isset($_POST['asignatura']) ? trim((string) $_POST['asignatura']) : '',
+        'carrera' => isset($_POST['carrera']) ? trim((string) $_POST['carrera']) : '',
+        'universidad' => isset($_POST['universidad']) ? trim((string) $_POST['universidad']) : '',
+        'periodo' => isset($_POST['periodo']) ? trim((string) $_POST['periodo']) : '',
+        'actividad' => isset($_POST['actividad']) ? trim((string) $_POST['actividad']) : '',
+        'nota' => isset($_POST['nota']) ? trim((string) $_POST['nota']) : '',
+    );
+}
 
 /**
  * @param array<string, string> $form
@@ -502,6 +712,71 @@ function validateUpdateUserForm(array $form): array
 
     if ($form['status'] === '') {
         $errors['status'] = 'El estado es obligatorio.';
+    }
+
+    return $errors;
+}
+
+/**
+ * @param array<string, string> $form
+ * @return array<string, string>
+ */
+function validateCreateCalificacionForm(array $form): array
+{
+    $errors = array();
+
+    if ($form['estudiante'] === '') {
+        $errors['estudiante'] = 'El estudiante es obligatorio.';
+    }
+
+    if ($form['docente'] === '') {
+        $errors['docente'] = 'El docente es obligatorio.';
+    }
+
+    if ($form['asignatura'] === '') {
+        $errors['asignatura'] = 'La asignatura es obligatoria.';
+    }
+
+    if ($form['carrera'] === '') {
+        $errors['carrera'] = 'La carrera es obligatoria.';
+    }
+
+    if ($form['universidad'] === '') {
+        $errors['universidad'] = 'La universidad es obligatoria.';
+    }
+
+    if ($form['periodo'] === '') {
+        $errors['periodo'] = 'El periodo es obligatorio.';
+    }
+
+    if ($form['actividad'] === '') {
+        $errors['actividad'] = 'La actividad evaluada es obligatoria.';
+    }
+
+    if ($form['nota'] === '') {
+        $errors['nota'] = 'La nota es obligatoria.';
+    } elseif (!is_numeric($form['nota'])) {
+        $errors['nota'] = 'La nota debe ser un número válido.';
+    } else {
+        $nota = (float) $form['nota'];
+        if ($nota < 0 || $nota > 5) {
+            $errors['nota'] = 'La nota debe estar entre 0 y 5.';
+        }
+    }
+
+    return $errors;
+}
+
+/**
+ * @param array<string, string> $form
+ * @return array<string, string>
+ */
+function validateUpdateCalificacionForm(array $form): array
+{
+    $errors = validateCreateCalificacionForm($form);
+
+    if ($form['id'] === '') {
+        $errors['id'] = 'La identificación es obligatoria.';
     }
 
     return $errors;
