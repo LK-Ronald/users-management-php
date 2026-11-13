@@ -114,3 +114,17 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 
 - Credenciales fuera del código fuente y del historial de git
 
+## Despliegue con Docker
+
+Construye la imagen y ejecuta el contenedor:
+
+```sh
+docker build -t users-management-php .
+docker run --rm -p 8080:80 --env-file .env users-management-php
+```
+
+Configura en `.env` las variables `DB_HOST`, `DB_PORT`, `DB_DATABASE`,
+`DB_USERNAME` y `DB_PASSWORD`. `DB_HOST` debe ser accesible desde el contenedor
+(por ejemplo, el nombre del servicio MySQL en la misma red Docker). Crea la base
+de datos y las tablas con `script.sql` antes de iniciar la aplicación.
+
